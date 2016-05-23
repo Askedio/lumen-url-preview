@@ -26,11 +26,9 @@ class ExampleController extends Controller
 
     public function show()
     {
-        $results = Cache::remember(md5($this->request->input('q')), $this->cache, function () {
+        return Cache::remember(md5($this->request->input('q')), $this->cache, function () {
             return $this->render();
         });
-
-        return $results;
     }
 
     private function render()
@@ -38,13 +36,16 @@ class ExampleController extends Controller
         if (!$query = $this->request->input('q')) {
             abort(404);
         }
-        
+
         return $this->parseResults((new LinkPreview($query))->getParsed());
     }
 
     private function parseResults($parsed)
     {
         foreach ($parsed as $link) {
+            $urlInfo = parse_url($link->getUrl());
+
+            $results['host'] = $urlInfo['host'];
             $results['url'] =  $link->getUrl();
             $results['title'] =  $link->getTitle();
             $results['contentType'] =  $link->getContentType();
@@ -57,6 +58,7 @@ class ExampleController extends Controller
                 $results['youtube']['code'] =  $link->getEmbedCode();
             }
         }
+
 
         return array_filter($results);
     }
