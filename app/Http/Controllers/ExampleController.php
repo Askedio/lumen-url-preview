@@ -70,7 +70,7 @@ class ExampleController extends Controller
             return $this->getImageUrl($image, $link);
         }, array_unique($link->getPictures()));
     }
-
+ 
     private function getImage($link)
     {
         if ($image = $link->getImage()) {
