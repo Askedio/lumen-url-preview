@@ -42,6 +42,8 @@ class ExampleController extends Controller
 
     private function parseResults($parsed)
     {
+        $results = [];
+
         foreach ($parsed as $link) {
             $urlInfo = parse_url($link->getUrl());
 
@@ -59,17 +61,14 @@ class ExampleController extends Controller
             }
         }
 
-
-        return array_filter($results);
+        return $results;
     }
 
     private function getPictures($link)
     {
-        foreach ($link->getPictures() as $image) {
-            $results[] = $this->getImageUrl($image, $link);
-        }
-
-        return $results;
+        return array_map(function ($image) use ($link) {
+            return $this->getImageUrl($image, $link);
+        }, array_unique($link->getPictures()));
     }
 
     private function getImage($link)
