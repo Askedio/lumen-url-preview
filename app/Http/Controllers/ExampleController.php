@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Cache;
 use Illuminate\Http\Request;
 use LinkPreview\LinkPreview;
-use Cache;
 
 class ExampleController extends Controller
 {
@@ -46,19 +46,18 @@ class ExampleController extends Controller
             $urlInfo = parse_url($link->getUrl());
 
             $results['host'] = $urlInfo['host'];
-            $results['url'] =  $link->getUrl();
-            $results['title'] =  $link->getTitle();
-            $results['contentType'] =  $link->getContentType();
-            $results['description'] =  $link->getDescription();
-            $results['image'] =  $this->getImage($link);
+            $results['url'] = $link->getUrl();
+            $results['title'] = $link->getTitle();
+            $results['contentType'] = $link->getContentType();
+            $results['description'] = $link->getDescription();
+            $results['image'] = $this->getImage($link);
             $results['images'] = $this->getPictures($link);
 
             if ($link instanceof VideoLink) {
-                $results['youtube']['id'] =  $link->getVideoId();
-                $results['youtube']['code'] =  $link->getEmbedCode();
+                $results['youtube']['id'] = $link->getVideoId();
+                $results['youtube']['code'] = $link->getEmbedCode();
             }
         }
-
 
         return array_filter($results);
     }
@@ -76,7 +75,7 @@ class ExampleController extends Controller
     {
         if ($image = $link->getImage()) {
             return $this->getImageUrl($image, $link);
-        };
+        }
 
         $images = $link->getPictures();
 
@@ -87,7 +86,7 @@ class ExampleController extends Controller
         foreach ($images as $img) {
             if ($size = $this->getImageSize($this->getImageUrl($img, $link))) {
                 if ($size[0] >= $this->imageWidth) {
-                     return $img;
+                    return $img;
                 }
             }
         }
