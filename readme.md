@@ -1,5 +1,5 @@
 # Lumen URL Preview
-A microservice to use for generating URL previews. Simply pass a url request and get a json result of it's paramaters.
+A micro service to use for generating URL previews. Simply pass a url request and get a json result of it's paramaters.
 
 Requests are cached, I am using Redis for this - so it's included.
 
