@@ -1,21 +1,33 @@
-## Lumen PHP Framework
+# Lumen URL Preview
+A microservice to use for generating URL previews. Simply pass a url request and get a json result of it's paramaters.
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+Requests are cached, I am using Redis for this - so it's included.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+# Installation
+Clone the package then install.
+~~~
+composer install
+~~~
+Configure the .env file.
 
-## Official Documentation
+# Usage
+Just `?q=url` is all it takes.
+~~~
+http://localhost?q=http://google.com
+~~~
+Results
+~~~~
+{  
+   "url":"http:\/\/google.com",
+   "title":"Google",
+   "contentType":"text\/html",
+   "description":"Search the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for.",
+   "image":"http:\/\/google.com\/images\/branding\/googleg\/1x\/googleg_standard_color_128dp.png",
+   "images":[  
+      "http:\/\/google.com\/images\/branding\/googlelogo\/1x\/googlelogo_white_background_color_272x92dp.png"
+   ]
+}
+~~~
 
-Documentation for the framework can be found on the [Lumen website](http://lumen.laravel.com/docs).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-### License
-
-The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+# Credits
+This package uses [kasp3r/link-preview](https://github.com/kasp3r/link-preview) that does all the heavy lifting, kudos.
