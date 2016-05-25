@@ -10,7 +10,7 @@ class ExampleController extends Controller
 {
     protected $imageWidth = 180;
 
-    protected $cache = 300;
+    protected $cache = 5;
 
     protected $request;
 
@@ -45,7 +45,7 @@ class ExampleController extends Controller
         $results = [];
 
         foreach ($parsed as $link) {
-            $urlInfo = parse_url($link->getUrl());
+            $urlInfo = parse_url(urldecode($link->getUrl()));
 
             $results['host'] = $urlInfo['host'];
             $results['url'] =  $link->getUrl();
@@ -66,11 +66,14 @@ class ExampleController extends Controller
 
     private function getPictures($link)
     {
+        if (empty($link->getPictures())) {
+            return [];
+        }
         return array_map(function ($image) use ($link) {
             return $this->getImageUrl($image, $link);
         }, array_unique($link->getPictures()));
     }
- 
+
     private function getImage($link)
     {
         if ($image = $link->getImage()) {
